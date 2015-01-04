@@ -1,0 +1,10 @@
+<Alloy>
+	<Window class="container">
+    <View top="100">
+      <TextField value="-=first=-"></TextField>
+      <TextField value="-=last=-"></TextField>
+      <TextField value="-=last=-"></TextField>
+      <Label>Hello, -=first=- -=last=-</Label>
+    </View>
+	</Window>
+</Alloy>
