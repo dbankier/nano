@@ -151,6 +151,7 @@ need to call the following command to trigger the updates to all bound views.
 - [ ] repeaters
 - [ ] improve performance
 - [ ] automate tests with [tishadow](https://github.com/dbankier/tishadow)
+- [ ] pretty logo
 
 ##Under The Hood
 
