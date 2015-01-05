@@ -116,4 +116,7 @@ function init($, $model) {
     }
   };
 }; 
+init.apply = function() {
+  Platform.performMicrotaskCheckpoint();
+}
 module.exports = init; 
