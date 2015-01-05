@@ -1,1 +1,1 @@
-../../../src/nano.js
+../../../dist/nano.js

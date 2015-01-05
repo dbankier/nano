@@ -4,8 +4,7 @@ var path = require("path");
 var root = path.join(__dirname,'..','..','..');
 var alloy_path = path.join(root, 'app');
 var lib_path = path.join(alloy_path, 'lib');
-var src_path = path.join(__dirname,'..', 'src');
-var srclib_path = path.join(__dirname,'..', 'lib');
+var dist_path = path.join(__dirname,'..', 'dist');
 
 console.log(alloy_path);
 function copyFileToPath(src,dest,name) {
@@ -15,9 +14,7 @@ if (fs.existsSync(alloy_path)) {
   if(!fs.existsSync(lib_path)) {
     fs.mkdirSync(lib_path);
   }
-  copyFileToPath(src_path, lib_path, "nano.js");
-  copyFileToPath(srclib_path, lib_path, "jshint.js");
-  copyFileToPath(srclib_path, lib_path, "observe.js");
-  console.log("nano.js library files copied");
+  copyFileToPath(dist_path, lib_path, "nano.js");
+  console.log("nano.js library file added to your project");
 }
 
