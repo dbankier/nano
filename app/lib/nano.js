@@ -1,6 +1,6 @@
 var _  = require("alloy/underscore");
-var ObjectObserver = require("observer").ObjectObserver ;
-var PathObserver = require("observer").PathObserver ;
+var ObjectObserver = require("observe").ObjectObserver ;
+var PathObserver = require("observe").PathObserver ;
 var jshint = require("jshint").JSHINT;
 
 _.templateSettings = {
