@@ -97,7 +97,7 @@ function init($, $model) {
               });
             }(view, prop,value, $model, tags));
           });
-          if (tags[0] === value){
+          if (!view.oneway && tags[0] === value){
             var tag = tags[0];
             var  expr = tag.substring(2,tag.length -2);
             jshint(expr);
