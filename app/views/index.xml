@@ -1,11 +1,13 @@
 <Alloy>
 	<Window class="container">
     <View top="100">
-      <TextField value="-=first=-"></TextField>
-      <TextField value="-=last=-"></TextField>
-      <TextField value="-=last=-" color="-= last.length < 4 ? 'red' : 'white' =-"></TextField>
-      <Label>Hello, -=first=- -=last=- -=last.length=-</Label>
-      <Label text="-=last.length < 3 ? 'too short' : 'great'=-"></Label>
+      <TextField value="-=person.first=-"></TextField>
+      <TextField value="-=person.last=-"></TextField>
+      <TextField value="-=person.last=-" color="-= person.last.length < 4 ? 'red' : 'black' =-"></TextField>
+      <Label text="-=person.last.length < 4 ? 'too short' : 'great'=-"></Label>
+      <Label>Hello, -=person.first=- -=person.last=- -=person.last.length=-</Label>
+      <TextField value="-=field=-"></TextField>
+      <Label>Length: -=field.length=-</Label>
     </View>
 	</Window>
 </Alloy>

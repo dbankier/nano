@@ -1,4 +1,5 @@
 var _  = require("alloy/underscore");
+var ObjectObserver = require("observer").ObjectObserver ;
 var PathObserver = require("observer").PathObserver ;
 var jshint = require("jshint").JSHINT;
 
@@ -8,6 +9,7 @@ _.templateSettings = {
 
 var regex = /\-\=.+?\=\-/gi;
 
+//polyfill
 if (!Function.prototype.bind) {
   Function.prototype.bind = function(oThis) {
     if (typeof this !== 'function') {
@@ -58,12 +60,7 @@ function injectValue(view, prop, value, $model, tags){
   var key;
   if (tags[0] !== value){
     var template = _.template(value);
-    var map = {};
-    tags.forEach(function(tag) {
-      key = tag.substring(2,tag.length -2);
-      map[key] = getValue($model, key);
-    });
-    view[prop] =  template(map);
+    view[prop] =  template($model);
   } else {
     var tag = tags[0];
     key = tag.substring(2,tag.length -2);
@@ -72,7 +69,7 @@ function injectValue(view, prop, value, $model, tags){
 
 }
 
-module.exports = function($, $model) {
+function init($, $model) {
   for(var view_id in $.__views) {
     var view = $.__views[view_id];
     for(var prop in view) {
@@ -87,7 +84,12 @@ module.exports = function($, $model) {
               jshint(expr);
               jshint.undefs[0].forEach(function(key) {
                 if (typeof key === "string") {
-                  var observer = new PathObserver($model,key);
+                  var observer;
+                  if (typeof $model[key] ==="object") {
+                    observer = new ObjectObserver($model[key]);
+                  } else {
+                    observer = new PathObserver($model, key );
+                  }
                   observer.open(function(newValue, oldValue){
                     injectValue(view, prop, value, $model, tags);
                   });
@@ -102,11 +104,11 @@ module.exports = function($, $model) {
             var undefs = _.filter(jshint.undefs[0], function(o) { return typeof o === "string" && o !== "W117"; });
             if (undefs.length === 1) {
               var key = undefs[0];
-              (function($model, key, prop) {
+              (function($model, expr, prop) {
                 view.addEventListener("change", function(e) {
-                  setValue($model, key, e.source[prop]);
+                  setValue($model, expr, e.source[prop]);
                 });
-              }($model, key, prop));
+              }($model, expr, prop));
             }
           }
         }
@@ -114,3 +116,4 @@ module.exports = function($, $model) {
     }
   };
 }; 
+module.exports = init; 

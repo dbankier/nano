@@ -1,7 +1,10 @@
 var nano = require("nano");
 var $model = {
-  first: "David",
-  last: "Bankier"
+  person: {
+    first: "David",
+    last: "Bankier"
+  },
+  field:"asdf"
 };
 
 $.index.open();
