@@ -1,0 +1,1 @@
+../bower_components/jshint/dist/jshint.js

@@ -3,8 +3,9 @@
     <View top="100">
       <TextField value="-=first=-"></TextField>
       <TextField value="-=last=-"></TextField>
-      <TextField value="-=last=-"></TextField>
-      <Label>Hello, -=first=- -=last=-</Label>
+      <TextField value="-=last=-" color="-= last.length < 4 ? 'red' : 'white' =-"></TextField>
+      <Label>Hello, -=first=- -=last=- -=last.length=-</Label>
+      <Label text="-=last.length < 3 ? 'too short' : 'great'=-"></Label>
     </View>
 	</Window>
 </Alloy>

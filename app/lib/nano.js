@@ -1,17 +1,51 @@
 var _  = require("alloy/underscore");
 var PathObserver = require("observer").PathObserver ;
+var jshint = require("jshint").JSHINT;
+
 _.templateSettings = {
   interpolate: /\-\=(.+?)\=\-/g
 };
 
-var regex = /\-\=[\w\d\.]+\=\-/gi;
+var regex = /\-\=.+?\=\-/gi;
 
-function getValue(obj, path) {
-  for (var i=0, path=path.split('.'), len=path.length; i<len; i++){
-    obj = obj[path[i]];
-  }
-  return obj;
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      // closest thing possible to the ECMAScript 5
+      // internal IsCallable function
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+
+    var aArgs   = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP    = function() {},
+        fBound  = function() {
+          return fToBind.apply(this instanceof fNOP && oThis
+                 ? this
+                 : oThis,
+                 aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
 }
+
+function evalWrapper(obj, path) {
+  var str = "(function() {";
+  for (var p in obj) {
+    str +="var " + p + " = " + JSON.stringify(obj[p]) + ";"; 
+  }
+  str += "return " + path +" ;})();";
+  return str;
+}
+
+function getValue(obj, exp) {
+  return eval(evalWrapper(obj, exp)); 
+}
+
 function setValue(obj, path, value) {
   for (var i=0, path=path.split('.'), len=path.length - 1; i<len; i++){
     obj = obj[path[i]];
@@ -48,24 +82,33 @@ module.exports = function($, $model) {
         if (tags) {
           injectValue(view, prop, value, $model, tags);
           tags.forEach(function(tag) {
-            var key = tag.substring(2,tag.length -2);
+            var expr = tag.substring(2,tag.length -2);
             (function(view, prop, value,$model, tags) {
-              var observer = new PathObserver($model,key);
-              observer.open(function(newValue, oldValue){
-                injectValue(view, prop, value, $model, tags);
+              jshint(expr);
+              jshint.undefs[0].forEach(function(key) {
+                if (typeof key === "string") {
+                  var observer = new PathObserver($model,key);
+                  observer.open(function(newValue, oldValue){
+                    injectValue(view, prop, value, $model, tags);
+                  });
+                }
               });
             }(view, prop,value, $model, tags));
           });
           if (tags[0] === value){
             var tag = tags[0];
-            var  key = tag.substring(2,tag.length -2);
-            (function($model, key, prop) {
-              view.addEventListener("change", function(e) {
-                setValue($model, key, e.source[prop]);
-              });
-            }($model, key, prop));
+            var  expr = tag.substring(2,tag.length -2);
+            jshint(expr);
+            var undefs = _.filter(jshint.undefs[0], function(o) { return typeof o === "string" && o !== "W117"; });
+            if (undefs.length === 1) {
+              var key = undefs[0];
+              (function($model, key, prop) {
+                view.addEventListener("change", function(e) {
+                  setValue($model, key, e.source[prop]);
+                });
+              }($model, key, prop));
+            }
           }
-
         }
       }
     }
