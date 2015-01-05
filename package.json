@@ -1,5 +1,5 @@
 {
-  "name": "nano-ti",
+  "name": "ti-nano",
   "version": "0.0.1",
   "description": "A databinding library for Appcelerator's Titanium Alloy framework",
   "directories": {
