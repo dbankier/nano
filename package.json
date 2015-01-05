@@ -1,0 +1,29 @@
+{
+  "name": "nano-ti",
+  "version": "0.0.1",
+  "description": "A databinding library for Appcelerator's Titanium Alloy framework",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbankier/nano.git"
+  },
+  "keywords": [
+    "nano",
+    "appcelerator",
+    "titanium",
+    "alloy",
+    "data-binding",
+    "observe-js"
+  ],
+  "author": "David Bankier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dbankier/nano/issues"
+  },
+  "homepage": "https://github.com/dbankier/nano"
+}
