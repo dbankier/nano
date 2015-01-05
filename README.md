@@ -4,7 +4,15 @@ A simple two-way data-binding library for Appcelerator's Alloy framework for Tit
 
 ##Install
 
-Just type the following from the root of your existing alloy project.
+From the root of your existing alloy project you can either.
+
+Install using [gitto](http://gitt.io/)
+
+~~~
+$ gittio install nano
+~~~
+
+or install using npm
 
 ~~~
 $ npm install ti-nano
@@ -152,6 +160,19 @@ need to call the following command to trigger the updates to all bound views.
 - [ ] improve performance
 - [ ] automate tests with [tishadow](https://github.com/dbankier/tishadow)
 - [ ] pretty logo
+
+##Building from Source
+
+Building the distributable is done using [grunt](http://gruntjs.com/)
+
+Enter the following:
+
+~~~
+$ npm install
+$ grunt
+~~~
+
+The built library is found in at `dist/nano.js`
 
 ##Under The Hood
 
