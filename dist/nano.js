@@ -13703,13 +13703,7 @@ var ObjectObserver = require("observe-js").ObjectObserver ;
 var PathObserver = require("observe-js").PathObserver ;
 var jshint = require("jshint").JSHINT;
 
-_.templateSettings = {
-  interpolate: /\-\=(.+?)\=\-/g
-};
-
-var regex = /\-\=.+?\=\-/gi;
-
-//polyfill from MDN
+//polyfill from MDN - needed for JSHINT
 if (!Function.prototype.bind) {
   Function.prototype.bind = function(oThis) {
     if (typeof this !== 'function') {
@@ -13719,14 +13713,14 @@ if (!Function.prototype.bind) {
     }
 
     var aArgs   = Array.prototype.slice.call(arguments, 1),
-        fToBind = this,
-        fNOP    = function() {},
-        fBound  = function() {
-          return fToBind.apply(this instanceof fNOP && oThis
-                 ? this
-                 : oThis,
-                 aArgs.concat(Array.prototype.slice.call(arguments)));
-        };
+    fToBind = this,
+    fNOP    = function() {},
+    fBound  = function() {
+      return fToBind.apply(this instanceof fNOP && oThis
+        ? this
+        : oThis,
+        aArgs.concat(Array.prototype.slice.call(arguments)));
+    };
 
     fNOP.prototype = this.prototype;
     fBound.prototype = new fNOP();
@@ -13735,18 +13729,16 @@ if (!Function.prototype.bind) {
   };
 }
 
-function evalWrapper(obj, path) {
-  var str = "(function() {";
-  for (var p in obj) {
-    str +="var " + p + " = " + JSON.stringify(obj[p]) + ";"; 
-  }
-  str += "return " + path +" ;})();";
-  return str;
+// configure the syntax
+var regex;
+function setRegex(r) {
+  regex = r;
+  _.templateSettings = {
+    interpolate: regex
+  };
 }
-
-function getValue(obj, exp) {
-  return eval(evalWrapper(obj, exp)); 
-}
+// defaults to {{ name }} 
+setRegex(/{{(.+?)}}/gi);
 
 function setValue(obj, path, value) {
   for (var i=0, path=path.split('.'), len=path.length - 1; i<len; i++){
@@ -13757,16 +13749,8 @@ function setValue(obj, path, value) {
 }
 
 function injectValue(view, prop, value, $model, tags){
-  var key;
-  if (tags[0] !== value){
-    var template = _.template(value);
-    view[prop] =  template($model);
-  } else {
-    var tag = tags[0];
-    key = tag.substring(2,tag.length -2);
-    view[prop] = getValue($model, key);
-  }
-
+  var template = _.template(value);
+  view[prop] =  template($model);
 }
 
 function init($, $model) {
@@ -13816,6 +13800,7 @@ function init($, $model) {
     }
   };
 }; 
+init.syntax = setRegex;
 init.apply = function() {
   Platform.performMicrotaskCheckpoint();
 }
