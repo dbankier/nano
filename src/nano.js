@@ -39,19 +39,6 @@ function setRegex(r) {
 // defaults to {{ name }} 
 setRegex(/{{(.+?)}}/gi);
 
-function evalWrapper(obj, path) {
-  var str = "(function() {";
-  for (var p in obj) {
-    str +="var " + p + " = " + JSON.stringify(obj[p]) + ";"; 
-  }
-  str += "return " + path +" ;})();";
-  return str;
-}
-
-function getValue(obj, exp) {
-  return eval(evalWrapper(obj, exp)); 
-}
-
 function setValue(obj, path, value) {
   for (var i=0, path=path.split('.'), len=path.length - 1; i<len; i++){
     obj = obj[path[i]];
@@ -61,16 +48,8 @@ function setValue(obj, path, value) {
 }
 
 function injectValue(view, prop, value, $model, tags){
-  var key;
-  if (tags[0] !== value){
-    var template = _.template(value);
-    view[prop] =  template($model);
-  } else {
-    var tag = tags[0];
-    key = tag.substring(2,tag.length -2);
-    view[prop] = getValue($model, key);
-  }
-
+  var template = _.template(value);
+  view[prop] =  template($model);
 }
 
 function init($, $model) {
