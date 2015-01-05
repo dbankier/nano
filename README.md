@@ -28,7 +28,10 @@ Add the following to the beginning of your controller:
 
 ~~~
 var nano = require("nano");
+nano.syntax(/\-\=(.+?)\=\-/gi);
 ~~~
+
+For an explanation of the `syntax` command see the binding section.
 
 Create an object you want to bind against, e.g.
 
@@ -61,8 +64,17 @@ N.B. using `this` is not really recommended.
 
 Binding is two-way by default. So any changes in the view is reflected in the model and vice-versa.
 
-Unfortunately Alloy has already taken curly brackets for binding attributes.
-For the moment the syntax is `-= myAttribute =-`. (Likely to change, I'll take suggestions.)
+The default syntax is `{{ attribute }}`. Currently there is a limitation in Alloy that prevents its usage.
+See [this issue](https://github.com/dbankier/nano/issues/1).
+The default syntax can be changed using the `nano.syntax` command.
+
+For the examples below the follow command was used to change the syntax:
+
+~~~
+nano.syntax(/\-\=(.+?)\=\-/gi);
+~~~
+
+This changes the syntax `-= attribute =-`. 
 
 ### Simple Cases
 

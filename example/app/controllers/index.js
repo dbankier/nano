@@ -1,4 +1,6 @@
 var nano = require("nano");
+nano.syntax(/\-\=(.+?)\=\-/gi);
+
 var $model = {
   person: {
     first: "David",

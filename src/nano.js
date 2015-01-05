@@ -2,13 +2,7 @@ var ObjectObserver = require("observe-js").ObjectObserver ;
 var PathObserver = require("observe-js").PathObserver ;
 var jshint = require("jshint").JSHINT;
 
-_.templateSettings = {
-  interpolate: /\-\=(.+?)\=\-/g
-};
-
-var regex = /\-\=.+?\=\-/gi;
-
-//polyfill from MDN
+//polyfill from MDN - needed for JSHINT
 if (!Function.prototype.bind) {
   Function.prototype.bind = function(oThis) {
     if (typeof this !== 'function') {
@@ -18,14 +12,14 @@ if (!Function.prototype.bind) {
     }
 
     var aArgs   = Array.prototype.slice.call(arguments, 1),
-        fToBind = this,
-        fNOP    = function() {},
-        fBound  = function() {
-          return fToBind.apply(this instanceof fNOP && oThis
-                 ? this
-                 : oThis,
-                 aArgs.concat(Array.prototype.slice.call(arguments)));
-        };
+    fToBind = this,
+    fNOP    = function() {},
+    fBound  = function() {
+      return fToBind.apply(this instanceof fNOP && oThis
+        ? this
+        : oThis,
+        aArgs.concat(Array.prototype.slice.call(arguments)));
+    };
 
     fNOP.prototype = this.prototype;
     fBound.prototype = new fNOP();
@@ -33,6 +27,17 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
+
+// configure the syntax
+var regex;
+function setRegex(r) {
+  regex = r;
+  _.templateSettings = {
+    interpolate: regex
+  };
+}
+// defaults to {{ name }} 
+setRegex(/{{(.+?)}}/gi);
 
 function evalWrapper(obj, path) {
   var str = "(function() {";
@@ -115,6 +120,7 @@ function init($, $model) {
     }
   };
 }; 
+init.syntax = setRegex;
 init.apply = function() {
   Platform.performMicrotaskCheckpoint();
 }
