@@ -1,6 +1,6 @@
 #Nano Titanium
 
-A simple data-binding library for Appcelerator's Alloy framework for Titanium.
+A simple two-way data-binding library for Appcelerator's Alloy framework for Titanium.
 
 ##Install
 

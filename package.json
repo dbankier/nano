@@ -1,7 +1,7 @@
 {
   "name": "ti-nano",
   "version": "0.0.1",
-  "description": "A databinding library for Appcelerator's Titanium Alloy framework",
+  "description": "A two-way databinding library for Appcelerator's Titanium Alloy framework",
   "directories": {
     "example": "example"
   },
