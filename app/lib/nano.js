@@ -9,7 +9,7 @@ _.templateSettings = {
 
 var regex = /\-\=.+?\=\-/gi;
 
-//polyfill
+//polyfill from MDN
 if (!Function.prototype.bind) {
   Function.prototype.bind = function(oThis) {
     if (typeof this !== 'function') {
@@ -102,7 +102,7 @@ function init($, $model) {
             var  expr = tag.substring(2,tag.length -2);
             jshint(expr);
             var undefs = _.filter(jshint.undefs[0], function(o) { return typeof o === "string" && o !== "W117"; });
-            if (undefs.length === 1) {
+            if (undefs.length === 1 && prop === 'value') { //locking to value for the moment - not mandatory
               var key = undefs[0];
               (function($model, expr, prop) {
                 view.addEventListener("change", function(e) {
