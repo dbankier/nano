@@ -1,32 +1,6 @@
 var ObjectObserver = require("observe-js").ObjectObserver ;
 var PathObserver = require("observe-js").PathObserver ;
-var jshint = require("jshint").JSHINT;
-
-//polyfill from MDN - needed for JSHINT
-if (!Function.prototype.bind) {
-  Function.prototype.bind = function(oThis) {
-    if (typeof this !== 'function') {
-      // closest thing possible to the ECMAScript 5
-      // internal IsCallable function
-      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-    }
-
-    var aArgs   = Array.prototype.slice.call(arguments, 1),
-    fToBind = this,
-    fNOP    = function() {},
-    fBound  = function() {
-      return fToBind.apply(this instanceof fNOP && oThis
-        ? this
-        : oThis,
-        aArgs.concat(Array.prototype.slice.call(arguments)));
-    };
-
-    fNOP.prototype = this.prototype;
-    fBound.prototype = new fNOP();
-
-    return fBound;
-  };
-}
+var jslint = require("./jslint");
 
 // configure the syntax
 var regex;
@@ -64,8 +38,7 @@ function init($, $model) {
           tags.forEach(function(tag) {
             var expr = tag.substring(2,tag.length -2);
             (function(view, prop, value,$model, tags) {
-              jshint(expr);
-              jshint.undefs[0].forEach(function(key) {
+              getUndefs(expr).forEach(function(key) {
                 if (typeof key === "string") {
                   var observer;
                   if (typeof $model[key] ==="object") {
@@ -83,8 +56,7 @@ function init($, $model) {
           if (!view.oneway && tags[0] === value){
             var tag = tags[0];
             var  expr = tag.substring(2,tag.length -2);
-            jshint(expr);
-            var undefs = _.filter(jshint.undefs[0], function(o) { return typeof o === "string" && o !== "W117"; });
+            var undefs = getUndefs(expr);
             if (undefs.length === 1 && prop === 'value') { //locking to value for the moment - not mandatory
               var key = undefs[0];
               (function($model, expr, prop) {
@@ -97,8 +69,20 @@ function init($, $model) {
         }
       }
     }
-  };
-}; 
+  }
+} 
+function getUndefs(expr) {
+  if (!jslint(expr)) {
+    return _.reduce(jslint.errors,function(acc, err) {
+              if(err.code === 'used_before_a') {
+                acc.push(err.a);
+              }
+              return acc;
+            }, []);
+  } 
+  
+  return [];
+}
 init.syntax = setRegex;
 init.apply = function() {
   Platform.performMicrotaskCheckpoint();

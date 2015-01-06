@@ -1,6 +1,6 @@
 {
   "name": "ti-nano",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A two-way databinding library for Appcelerator's Titanium Alloy framework",
   "directories": {
     "example": "example"
@@ -35,7 +35,6 @@
   "devDependencies": {
     "grunt-shell": "^1.1.1",
     "grunt-titaniumifier": "^1.0.1",
-    "jshint": "^2.5.11",
     "matchdep": "^0.3.0",
     "observe-js": "^0.4.2"
   }
