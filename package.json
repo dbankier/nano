@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/dbankier/nano",
   "devDependencies": {
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-shell": "^1.1.1",
     "grunt-titaniumifier": "^1.0.1",
     "matchdep": "^0.3.0",

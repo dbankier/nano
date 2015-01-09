@@ -16,6 +16,15 @@ module.exports = function(grunt) {
       target: {
         command: '(cd dist; unzip -p nano-commonjs-'+version+'.zip modules/commonjs/nano/'+version+'/nano.js > nano.js)'
       }
+    },
+    watch: {
+      nano: {
+        files: ["./src/nano.js"],
+        tasks: ['build'],
+        options: {
+          spawn: false
+        }
+      },
     }
   });
 
@@ -23,6 +32,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'build');
   grunt.registerTask('build', ['titaniumifier','shell']);
+  grunt.registerTask('dev', 'watch');
 };
 
 
