@@ -7100,7 +7100,6 @@ klass:              do {
 module.exports = JSLINT;
 
 },{}],11:[function(require,module,exports){
-(function (console){
 var ObjectObserver = require("observe-js").ObjectObserver ;
 var PathObserver = require("observe-js").PathObserver ;
 var jslint = require("./jslint");
@@ -7129,6 +7128,13 @@ function injectValue(view, prop, value, $model, tags){
   view[prop] =  template($model);
 }
 
+function initProperty($model, prop, expr) {
+  if ($model[prop] === undefined) {
+    var re = new RegExp(prop+"\\.");
+    $model[prop] = expr.match(re) ? {} : "";
+  }
+}
+
 function init($, $model) {
   for(var view_id in $.__views) {
     var view = $.__views[view_id];
@@ -7137,12 +7143,12 @@ function init($, $model) {
       if (typeof value === "string") {
         var tags = value.match(regex);
         if (tags) {
-          injectValue(view, prop, value, $model, tags);
           tags.forEach(function(tag) {
             var expr = tag.substring(2,tag.length -2);
             (function(view, prop, value,$model, tags) {
               getUndefs(expr).forEach(function(key) {
                 if (typeof key === "string") {
+                  initProperty($model, key, expr);
                   var observer;
                   if (typeof $model[key] ==="object") {
                     observer = new ObjectObserver($model[key]);
@@ -7156,11 +7162,11 @@ function init($, $model) {
               });
             }(view, prop,value, $model, tags));
           });
+          injectValue(view, prop, value, $model, tags);
           if (!view.oneway && tags[0] === value){
             var tag = tags[0];
             var  expr = tag.substring(2,tag.length -2);
             var undefs = getUndefs(expr);
-            console.log(undefs);
             if (undefs.length === 1 && prop === 'value') { //locking to value for the moment - not mandatory
               var key = undefs[0];
               (function($model, expr, prop) {
@@ -7193,6 +7199,5 @@ init.apply = function() {
 }
 module.exports = init; 
 
-}).call(this,require("--console--"))
-},{"--console--":8,"./jslint":10,"observe-js":9}]},{},[11])(11)
+},{"./jslint":10,"observe-js":9}]},{},[11])(11)
 });

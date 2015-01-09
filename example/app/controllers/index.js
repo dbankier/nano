@@ -1,10 +1,11 @@
 var nano = require("nano");
-nano.syntax(/\-\=(.+?)\=\-/gi);
+//nano.syntax(/\-\=(.+?)\=\-/gi);
 
 var $model = {
   person: {
     first: "David",
-    last: "Bankier"
+    last: "Bankier",
+    bool:true
   },
   field:"asdf"
 };
