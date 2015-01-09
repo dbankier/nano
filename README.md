@@ -22,8 +22,6 @@ It will copy all the required libraries to your `app/lib` folder.
 
 ##Setup
 
-- [ ] TODO: build an alloy hook to skip all this.
-
 Add the following to the beginning of your controller:
 
 ~~~
@@ -164,14 +162,6 @@ need to call the following command to trigger the updates to all bound views.
 ~~~
   nano.apply();
 ~~~
-
-##Roadmap/ToDo
-
-- [ ] alloy plugin to automate nano binding on all controllers
-- [ ] repeaters
-- [ ] improve performance
-- [ ] automate tests with [tishadow](https://github.com/dbankier/tishadow)
-- [ ] pretty logo
 
 ##Building from Source
 
