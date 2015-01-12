@@ -47,7 +47,6 @@ function callHook(name, args, callback) {
     });
     async.series(tasks, callback);
   } else {
-    console.log(name);
     callback();
   }
 }
@@ -142,7 +141,6 @@ nano.load = function(_module) {
 
 //module hook function
 nano.hook = function(hook, callback) {
-  console.debug(hook);
   if (hooks[hook] === undefined) {
     hooks[hook] = [];
   }

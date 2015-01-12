@@ -8227,7 +8227,6 @@ klass:              do {
 module.exports = JSLINT;
 
 },{}],12:[function(require,module,exports){
-(function (console){
 var ObjectObserver = require("observe-js").ObjectObserver ;
 var PathObserver = require("observe-js").PathObserver ;
 var jslint = require("./jslint");
@@ -8277,7 +8276,6 @@ function callHook(name, args, callback) {
     });
     async.series(tasks, callback);
   } else {
-    console.log(name);
     callback();
   }
 }
@@ -8372,7 +8370,6 @@ nano.load = function(_module) {
 
 //module hook function
 nano.hook = function(hook, callback) {
-  console.debug(hook);
   if (hooks[hook] === undefined) {
     hooks[hook] = [];
   }
@@ -8386,8 +8383,7 @@ nano.load(oneway());
 
 module.exports = nano; 
 
-}).call(this,require("--console--"))
-},{"--console--":9,"./jslint":11,"./plugins/nano-oneway":13,"./plugins/nano-safeinit":14,"async":1,"observe-js":10}],13:[function(require,module,exports){
+},{"./jslint":11,"./plugins/nano-oneway":13,"./plugins/nano-safeinit":14,"async":1,"observe-js":10}],13:[function(require,module,exports){
 // prevents binding the view changes back to the model 
 // if the view has a `oneway` attribute/property
 module.exports = function(options) {
