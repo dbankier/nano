@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     },
     watch: {
       nano: {
-        files: ["./src/nano.js"],
+        files: ["./src/**"],
         tasks: ['build'],
         options: {
           spawn: false
