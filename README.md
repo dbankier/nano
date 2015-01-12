@@ -140,7 +140,8 @@ view property. Here is a validation example.
 
 ### One-Way binding
 
-You can use the `oneway` attribute if you want force one-way binding 
+You can use the `oneway` attribute if you want force one-way binding.
+This is part of the building `nano-oneway` plug-in. 
 
 ~~~
 <Alloy>
@@ -162,6 +163,55 @@ need to call the following command to trigger the updates to all bound views.
 ~~~
   nano.apply();
 ~~~
+
+## Plugins
+
+
+### Loading
+
+Load your plug-ins once, in your `alloy.js` file. For example:
+
+~~~
+var nano = require("nano");
+var oneway = require("nano-oneway");
+nano.load(oneway());
+~~~
+
+### Wrting
+
+See the `src/plugins` folder for some examples in order to create a plug-in.
+
+You can hook into the following events:
+
+ * `model:bind` - called prior to binding to a model property.
+ * `model:change` - called when a model change is detected.
+ * `view:init` - called prior to initialising the view with the bound model values.
+ * `view:bind` - called prior to adding a listener to the `change` event of the bound view.
+ * `view:change` - called when the `change` event of the view is called.
+
+A hook is added in your plug by calling the `hook` command. For example, the one-way binding plug-in:
+
+~~~
+// Initialises and properties in template/expression that aren't in the $model
+module.exports = function(options) {
+  return function(nano) {
+    nano.hook('model:bind', function(args, next) {
+      if(!args.view.oneway) {
+        next();
+      }
+    });
+  };
+};
+~~~
+
+The following arguments are passed when the hook is called:
+
+ * `args` - this object contains the following properties:
+   - `$model` - the bound model
+   - `view` - bound view raising the event, e.g. the `Ti.UI.Label`
+   - `prop` - the view's bound property raising the event, e.g. `text` (for `model:bind` this is the property of the model)
+   - `expr` - the bound expresion, e.g. if the value of text is `Surname length: {{last.length}}`, `expr` would be `last.length`
+ * `next` - the hooks act like middle and are executed in the order they were loaded. `next` is a callback to continue. 
 
 ##Building from Source
 
