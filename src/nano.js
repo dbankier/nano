@@ -3,6 +3,10 @@ var PathObserver = require("observe-js").PathObserver ;
 var jslint = require("./jslint");
 var async = require("async");
 
+// plugins
+var safeinit = require("./plugins/nano-safeinit");
+var oneway = require("./plugins/nano-oneway");
+
 
 var hooks = {};
 
@@ -145,5 +149,9 @@ nano.hook = function(hook, callback) {
   hooks[hook].push(callback);
 };
 
+
+// load default plugins
+nano.load(safeinit());
+nano.load(oneway());
 
 module.exports = nano; 
