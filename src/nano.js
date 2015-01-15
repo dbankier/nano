@@ -64,7 +64,7 @@ function nano($, $model) {
             (function(view, prop, value,$model, tags) {
               getUndefs(expr).forEach(function(key) {
                 if (typeof key === "string") {
-                  callHook("model:bind", { $model: $model, view: view, expr: expr, prop: key }, function() {
+                  callHook("model:bind", { $: $, $model: $model, view: view, expr: expr, prop: key }, function() {
                     var observer;
                     if (typeof $model[key] ==="object") {
                       observer = new ObjectObserver($model[key]);
@@ -72,7 +72,7 @@ function nano($, $model) {
                       observer = new PathObserver($model, key );
                     }
                     observer.open(function(newValue, oldValue){
-                      callHook("model:change", { $model: $model, view: view, expr: expr, prop: prop }, function() {
+                      callHook("model:change", { $: $, $model: $model, view: view, expr: expr, prop: prop }, function() {
                         if (OS_ANDROID && view.__manual_change) {
                           view.__manual_change = false;
                         } else {
@@ -87,7 +87,7 @@ function nano($, $model) {
           });
 
           // initialise bound property in view
-          callHook("view:init", { $model: $model, view: view, value: value, prop: prop }, function() {
+          callHook("view:init", { $: $, $model: $model, view: view, value: value, prop: prop }, function() {
             injectValue(view, prop, value, $model);
           });
 
@@ -97,11 +97,11 @@ function nano($, $model) {
             var  expr = tag.substring(2,tag.length -2);
             var undefs = getUndefs(expr);
             if (undefs.length === 1 && prop === 'value') { //locking to value for the moment - not mandatory
-              callHook("view:bind", { $model: $model, view: view, expr: expr, prop: prop }, function() {
+              callHook("view:bind", { $: $, $model: $model, view: view, expr: expr, prop: prop }, function() {
                 //use change listener of view
                 (function($model, expr, prop) {
                   view.addEventListener("change", function(e) {
-                    callHook("view:change", { $model: $model, view: e.source, expr: expr, prop: prop }, function() {
+                    callHook("view:change", { $: $, $model: $model, view: e.source, expr: expr, prop: prop }, function() {
                       // set value in model on change in view
                       if (OS_ANDROID) {
                         e.source.__manual_change = true;

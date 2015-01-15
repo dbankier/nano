@@ -207,6 +207,7 @@ module.exports = function(options) {
 The following arguments are passed when the hook is called:
 
  * `args` - this object contains the following properties:
+   - `$` - `$` from the controller
    - `$model` - the bound model
    - `view` - bound view raising the event, e.g. the `Ti.UI.Label`
    - `prop` - the view's bound property raising the event, e.g. `text` (for `model:bind` this is the property of the model)
