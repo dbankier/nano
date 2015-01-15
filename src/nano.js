@@ -154,6 +154,10 @@ nano.hook = function(hook, callback) {
   hooks[hook].push(callback);
 };
 
+//private nano function useful for plugins
+nano.__callHook = callHook;
+nano.__setValue = setValue;
+nano.__injectValue = injectValue;
 
 // load default plugins
 nano.load(safeinit());
