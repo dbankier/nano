@@ -73,7 +73,11 @@ function nano($, $model) {
                     }
                     observer.open(function(newValue, oldValue){
                       callHook("model:change", { $model: $model, view: view, expr: expr, prop: prop }, function() {
-                        injectValue(view, prop, value, $model);
+                        if (OS_ANDROID && view.__manual_change) {
+                          view.__manual_change = false;
+                        } else {
+                          injectValue(view, prop, value, $model);
+                        }
                       });
                     });
                   });
@@ -99,6 +103,9 @@ function nano($, $model) {
                   view.addEventListener("change", function(e) {
                     callHook("view:change", { $model: $model, view: e.source, expr: expr, prop: prop }, function() {
                       // set value in model on change in view
+                      if (OS_ANDROID) {
+                        e.source.__manual_change = true;
+                      }
                       setValue($model, expr, e.source[prop]);
                     });
                   });

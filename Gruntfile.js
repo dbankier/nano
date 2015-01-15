@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'build');
   grunt.registerTask('build', ['titaniumifier','shell']);
-  grunt.registerTask('dev', 'watch');
+  grunt.registerTask('dev', ['build', 'watch']);
 };
 
 

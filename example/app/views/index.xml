@@ -2,11 +2,11 @@
 	<Window class="container">
     <View top="100">
       <TextField value="{{person.first}}"></TextField>
-      <TextField value="{{name.middle}}" oneway></TextField>
+      <TextField value="{{name.middle}}" ></TextField>
       <TextField value="{{person.last}}" color="{{ person.last.length < 4 ? 'red' : 'black' }}"></TextField>
       <TextField value="{{person.last}}" oneway></TextField>
       <Label text="{{person.last.length < 4 ? 'too short' : 'great'}}"></Label>
-      <Label>Hello, {{person.first}} {{person.middle}} {{person.last}} {{person.last.length}}</Label>
+      <Label>Hello, {{person.first}} {{name.middle}} {{person.last}} {{person.last.length}}</Label>
       <TextField value="{{field}}"></TextField>
       <Label>Length: {{field.length}}</Label>
       <Switch value="{{bool}}"></Switch>

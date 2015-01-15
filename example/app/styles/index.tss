@@ -5,6 +5,9 @@
   layout: "vertical"
 }
 
+"TextField" : {
+  color: "black"
+}
 "Label": {
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
