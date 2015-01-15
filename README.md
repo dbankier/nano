@@ -173,9 +173,13 @@ Load your plug-ins once, in your `alloy.js` file. For example:
 
 ~~~
 var nano = require("nano");
-var oneway = require("nano-oneway");
-nano.load(oneway());
+var debounce = require("nano-debounce");
+nano.load(debounce());
 ~~~
+
+#### Official Plugins (see #7)
+
+ * [nano-debounce](https://github.com/dbankier/nano-debounce) - add a debounce delay so that changes in the view are only applied to the model after a timer expiry of inactivity 
 
 ### Wrting
 
