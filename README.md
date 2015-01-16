@@ -179,7 +179,8 @@ nano.load(debounce());
 
 #### Official Plugins (see #7)
 
- * [nano-debounce](https://github.com/dbankier/nano-debounce) - add a debounce delay so that changes in the view are only applied to the model after a timer expiry of inactivity 
+ * [nano-debounce](https://github.com/dbankier/nano-debounce) - add a debounce delay so that changes in the view are only applied to the model after a timer expiry of inactivity
+ * [nano-class](https://github.com/dbankier/nano-class) - bind the model to the class (style) of a view.
 
 ### Wrting
 
