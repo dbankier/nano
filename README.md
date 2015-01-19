@@ -181,6 +181,7 @@ nano.load(debounce());
 
  * [nano-debounce](https://github.com/dbankier/nano-debounce) - add a debounce delay so that changes in the view are only applied to the model after a timer expiry of inactivity
  * [nano-class](https://github.com/dbankier/nano-class) - bind the model to the class (style) of a view.
+ * [nano-bindon](https://github.com/dbankier/nano-bindon) - change the view bind event from `change` to any other.
 
 ### Wrting
 
