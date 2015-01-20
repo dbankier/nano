@@ -1263,7 +1263,7 @@ function replacer(key, value) {
   if (util.isUndefined(value)) {
     return '' + value;
   }
-  if (util.isNumber(value) && !isFinite(value)) {
+  if (util.isNumber(value) && (isNaN(value) || !isFinite(value))) {
     return value.toString();
   }
   if (util.isFunction(value) || util.isRegExp(value)) {
@@ -1402,22 +1402,23 @@ function objEquiv(a, b) {
     return false;
   // an identical 'prototype' property.
   if (a.prototype !== b.prototype) return false;
-  // if one is a primitive, the other must be same
-  if (util.isPrimitive(a) || util.isPrimitive(b)) {
-    return a === b;
-  }
-  var aIsArgs = isArguments(a),
-      bIsArgs = isArguments(b);
-  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
-    return false;
-  if (aIsArgs) {
+  //~~~I've managed to break Object.keys through screwy arguments passing.
+  //   Converting to array solves the problem.
+  if (isArguments(a)) {
+    if (!isArguments(b)) {
+      return false;
+    }
     a = pSlice.call(a);
     b = pSlice.call(b);
     return _deepEqual(a, b);
   }
-  var ka = objectKeys(a),
-      kb = objectKeys(b),
-      key, i;
+  try {
+    var ka = objectKeys(a),
+        kb = objectKeys(b),
+        key, i;
+  } catch (e) {//happens when one is a string literal and the other isn't
+    return false;
+  }
   // having the same number of owned properties (keys incorporates
   // hasOwnProperty)
   if (ka.length != kb.length)
@@ -8226,8 +8227,9 @@ klass:              do {
 module.exports = JSLINT;
 
 },{}],12:[function(require,module,exports){
-var ObjectObserver = require("observe-js").ObjectObserver ;
-var PathObserver = require("observe-js").PathObserver ;
+var observejs = require("observe-js");
+var ObjectObserver = observejs.ObjectObserver ;
+var PathObserver = observejs.PathObserver ;
 var jslint = require("./jslint");
 var async = require("async");
 
@@ -8386,6 +8388,10 @@ nano.hook = function(hook, callback) {
 nano.__callHook = callHook;
 nano.__setValue = setValue;
 nano.__injectValue = injectValue;
+nano.__libs = {
+  observejs: observejs,
+  async: async
+};
 
 // load default plugins
 nano.load(safeinit());

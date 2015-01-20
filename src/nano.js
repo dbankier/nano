@@ -1,5 +1,6 @@
-var ObjectObserver = require("observe-js").ObjectObserver ;
-var PathObserver = require("observe-js").PathObserver ;
+var observejs = require("observe-js");
+var ObjectObserver = observejs.ObjectObserver ;
+var PathObserver = observejs.PathObserver ;
 var jslint = require("./jslint");
 var async = require("async");
 
@@ -158,6 +159,10 @@ nano.hook = function(hook, callback) {
 nano.__callHook = callHook;
 nano.__setValue = setValue;
 nano.__injectValue = injectValue;
+nano.__libs = {
+  observejs: observejs,
+  async: async
+};
 
 // load default plugins
 nano.load(safeinit());
