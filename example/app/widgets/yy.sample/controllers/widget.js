@@ -1,4 +1,4 @@
-Object.defineProperty($, "text", {
+Object.defineProperty($, "value", {
     set: function(val) {
       $.text_field.value = val;
     },
@@ -15,3 +15,7 @@ Object.defineProperty($, "label", {
       return $.label_field.text;
     }
 });
+
+$.addEventListener = function(evt, fn) {
+  $.text_field.addEventListener(evt, fn);
+};
