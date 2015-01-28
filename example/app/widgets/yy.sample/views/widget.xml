@@ -1,0 +1,6 @@
+<Alloy>
+  <View class="container">
+    <Label id="label_field"></Label>
+    <TextField id="text_field"></TextField>
+  </View>
+</Alloy>

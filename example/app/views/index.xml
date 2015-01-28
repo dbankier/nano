@@ -5,6 +5,7 @@
       <TextField value="{{name.middle}}" ></TextField>
       <TextField value="{{person.last}}" color="{{ person.last.length < 4 ? 'red' : 'black' }}"></TextField>
       <TextField value="{{person.last}}" oneway></TextField>
+      <Widget id="test_widget" src="yy.sample" label="{{person.first}}" text="{{person.last}}"></Widget>
       <Label text="{{person.last.length < 4 ? 'too short' : 'great'}}"></Label>
       <Label>Hello, {{person.first}} {{name.middle}} {{person.last}} {{person.last.length}}</Label>
       <TextField value="{{field}}"></TextField>

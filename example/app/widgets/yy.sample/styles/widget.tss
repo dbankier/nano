@@ -1,0 +1,20 @@
+"View" :{
+  layout: "horizontal",
+  height: Ti.UI.SIZE,
+  left: 50
+}
+"Label": {
+	color: '#000',
+	font: {
+		fontSize: 18,
+		fontWeight: 'bold'
+	},
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE
+}
+"TextField" : {
+  left: 10,
+	font: {
+		fontSize: 18,
+	}
+}
