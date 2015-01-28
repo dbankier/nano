@@ -8284,9 +8284,16 @@ function callHook(name, args, callback) {
 function nano($, $model) {
   for(var view_id in $.__views) {
     var view = $.__views[view_id];
-    for(var prop in view) {
-      var value = view[prop];
-      if (typeof value === "string") {
+
+    //the binding properties are different for widgets
+    //need to iterate over the args property
+    var iter = view;
+    if (view.args && view.__controllerPath === "widget") {
+      iter = view.args;
+    }
+    for(var prop in iter) {
+      var value = iter[prop];
+      if (typeof value === "string" && !prop.match(/^__/)) {
         var tags = value.match(regex);
         if (tags) {
           tags.forEach(function(tag) {
