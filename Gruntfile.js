@@ -5,16 +5,13 @@ module.exports = function(grunt) {
     titaniumifier: {
       "module": {
         options: {
+          bundle: true,
+          module: true
         },
         files: [{
           src: ['.'],
           dest: 'dist'
         }]
-      }
-    },
-    shell: {
-      target: {
-        command: '(cd dist; unzip -p nano-commonjs-'+version+'.zip modules/commonjs/nano/'+version+'/nano.js > nano.js)'
       }
     },
     watch: {
@@ -31,7 +28,7 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.registerTask('default', 'build');
-  grunt.registerTask('build', ['titaniumifier','shell']);
+  grunt.registerTask('build', 'titaniumifier');
   grunt.registerTask('dev', ['build', 'watch']);
 };
 
