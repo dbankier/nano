@@ -7,8 +7,8 @@ module.exports = function(grunt) {
         options: {
         },
         files: [{
-          src:['.'],
-          dest:'dist'
+          src: ['.'],
+          dest: 'dist'
         }]
       }
     },
