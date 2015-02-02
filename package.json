@@ -35,8 +35,7 @@
   "devDependencies": {
     "async": "^0.9.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-shell": "^1.1.1",
-    "grunt-titaniumifier": "^1.0.1",
+    "grunt-titaniumifier": "^1.1.0",
     "matchdep": "^0.3.0",
     "observe-js": "^0.4.2"
   },
