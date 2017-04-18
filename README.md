@@ -1,8 +1,8 @@
-#Nano Titanium
+# Nano Titanium
 
 A simple two-way data-binding library for Appcelerator's Alloy framework for Titanium.
 
-##Install
+## Install
 
 From the root of your existing alloy project you can either.
 
@@ -20,7 +20,7 @@ $ npm install ti-nano
 
 It will copy all the required libraries to your `app/lib` folder.
 
-##Setup
+## Setup
 
 Add the following to the beginning of your controller:
 
@@ -58,7 +58,7 @@ nano($,args);
 
 N.B. using `this` is not really recommended.
 
-##Binding
+## Binding
 
 Binding is two-way by default. So any changes in the view is reflected in the model and vice-versa.
 
@@ -220,7 +220,7 @@ The following arguments are passed when the hook is called:
    - `expr` - the bound expresion, e.g. if the value of text is `Surname length: {{last.length}}`, `expr` would be `last.length`
  * `next` - the hooks act like middle and are executed in the order they were loaded. `next` is a callback to continue. 
 
-##Building from Source
+## Building from Source
 
 Building the distributable is done using [grunt](http://gruntjs.com/)
 
@@ -233,12 +233,12 @@ $ grunt
 
 The built library is found in at `dist/nano.js`
 
-##Under The Hood
+## Under The Hood
 
 It uses Polymer's [object-js](https://github.com/polymer/observe-js) to fill in the gaps
 until we get `Object.observe` in Titanium.
 
-##Why
+## Why
 
 This was originally motivated by seeing [this](http://beautyindesign.com/blog/uber-simple-idea-for-alloy-view-data-binding/) by @rblalock.
 
